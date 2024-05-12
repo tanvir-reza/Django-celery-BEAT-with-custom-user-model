@@ -2,7 +2,7 @@
 
 # Use the official image as a parent image
 
-FROM python:3.8
+FROM python:3.10
 
 # Set the working directory
 
