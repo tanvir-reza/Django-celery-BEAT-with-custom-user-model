@@ -2,7 +2,7 @@
 
 # Use the official image as a parent image
 
-FROM python:3.7-slim
+FROM python:3.8
 
 # Set the working directory
 
@@ -18,6 +18,10 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-# Make port 80 available to the world outside this container
+# Run the server
 
-EXPOSE 80
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+
+
+
+EXPOSE 8080
