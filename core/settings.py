@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-1gy55bjq8!-%!1tr@76dw7szs#+hp)pf=e#dc!6%9+w17235q=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'django_celery_beat',
+    'dbbackup',  # django-dbbackup
 ]
 
 MIDDLEWARE = [
@@ -70,8 +71,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         # postgresql
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'demo',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
+        # default sqlite3
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
@@ -107,6 +121,10 @@ TIME_ZONE = 'Asia/Dhaka'
 USE_I18N = True
 
 USE_TZ = True
+
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR / 'backups'}
 
 
 # Static files (CSS, JavaScript, Images)
