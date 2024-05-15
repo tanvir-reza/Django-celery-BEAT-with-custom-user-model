@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'users',
     'django_celery_beat',
     'dbbackup',  # django-dbbackup
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+
+rest_framework = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+   
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
