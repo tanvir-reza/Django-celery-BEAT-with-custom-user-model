@@ -70,13 +70,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-rest_framework = {
+REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
 
     "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 1
    
 }
 
@@ -166,4 +171,10 @@ CELERY_BEAT_SCHEDULE = {
         # execute every 5 seconds
         "schedule": 5.0,
     },
+    "generate_attendance_2": {
+        # Replace with your task function
+        "task": "my_task_2",
+        # execute every 5 seconds
+        "schedule": 5.0,
+    }
 }

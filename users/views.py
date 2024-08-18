@@ -9,6 +9,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
+from .filters import BookByUserFilter
+from rest_framework.pagination import PageNumberPagination
+
 
 
 # Create your views here.
@@ -36,8 +39,29 @@ def getBooks(request):
 
     return Response(serializer.data)
 
+
 class BooksViewSet(ModelViewSet):
-    pass
+    queryset = Books.objects.all()
+    serializer_class = BooksSerializer
+    def get_queryset(self):
+        return Books.objects.all()
+    
+    def get_serializer_class(self):
+        return BooksSerializer
+    
+    # update book details
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
+    
+
+    
 
 
 @api_view(['GET'])
@@ -89,3 +113,11 @@ class UserRegistrationView(ObtainAuthToken):
                 "email": login_user_response.data['email'],
                 "token": token.key
             },status=status.HTTP_201_CREATED)
+        
+@api_view(['GET'])
+def bookFilter(request):
+    queryset = Books.objects.prefetch_related('books')
+
+    filter = BookByUserFilter(request.GET, queryset=queryset)
+    serializer = BooksSerializer(filter.qs, many=True)
+    return Response(serializer.data)

@@ -7,3 +7,8 @@ venv/*
 # Ignore python cache and .pyc files
 /*.pyc
 __pycache__
+*.pyc
+*.pyc
+*.pyc
+/core/__pycache__
+/core/__pycache__
